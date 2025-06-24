@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    name: Build Debug APK
+    name: Run ktLintCheck
     runs-on: ubuntu-latest
 
     steps:
