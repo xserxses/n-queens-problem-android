@@ -4,5 +4,4 @@ import com.github.xserxses.nqueensproblem.main.di.MainComponent
 import dagger.Module
 
 @Module(subcomponents = [MainComponent::class])
-class QueensSubcomponentsModule {
-}
+class QueensSubcomponentsModule

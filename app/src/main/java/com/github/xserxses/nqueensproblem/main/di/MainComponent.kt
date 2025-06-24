@@ -5,7 +5,6 @@ import dagger.Subcomponent
 
 @Subcomponent(modules = [MainModule::class])
 interface MainComponent {
-
     // Factory that is used to create instances of this subcomponent
     @Subcomponent.Factory
     interface Factory {
