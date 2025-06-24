@@ -1,4 +1,4 @@
-package com.github.xserxses.nqueensproblem
+package com.github.xserxses.nqueensproblem.main
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -11,10 +11,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.github.xserxses.nqueensproblem.app.QueensApplication
 import com.github.xserxses.nqueensproblem.ui.theme.NQueensProblemTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        (applicationContext as QueensApplication)
+            .appComponent
+            .mainComponent()
+            .create()
+            .inject(this)
+
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
