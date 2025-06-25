@@ -12,15 +12,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.github.xserxses.nqueensproblem.app.QueensApplication
+import com.github.xserxses.nqueensproblem.main.di.MainComponent
 import com.github.xserxses.nqueensproblem.ui.theme.NQueensProblemTheme
 
 class MainActivity : ComponentActivity() {
+
+    lateinit var component: MainComponent
+
     override fun onCreate(savedInstanceState: Bundle?) {
-        (applicationContext as QueensApplication)
+        component = (applicationContext as QueensApplication)
             .appComponent
             .mainComponent()
             .create()
-            .inject(this)
+
+        component.inject(this)
 
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
