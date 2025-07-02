@@ -5,9 +5,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
-fun GameBoardScreen() {
+fun GameBoardScreen(variant: String) {
     Text(
-        text = "GameBoardScreen",
+        text = "GameBoardScreen - $variant",
         modifier = Modifier
     )
 }

@@ -29,7 +29,7 @@ fun WelcomeHomeScreen(
     onNavigateScoreboard: () -> Unit
 ) {
     WelcomeHomeScreenContent(
-        continueEnabled = false,
+        continueEnabled = true,
         onNavigateContinue = onNavigateContinue,
         onNavigateNew = onNavigateNew,
         onNavigateScoreboard = onNavigateScoreboard
