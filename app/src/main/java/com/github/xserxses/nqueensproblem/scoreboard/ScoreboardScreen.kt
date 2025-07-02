@@ -1,13 +1,13 @@
-package com.github.xserxses.nqueensproblem.game.board
+package com.github.xserxses.nqueensproblem.scoreboard
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
-fun GameBoardScreen() {
+fun ScoreboardScreen() {
     Text(
-        text = "GameBoardScreen",
+        text = "ScoreBoardScreen",
         modifier = Modifier
     )
 }

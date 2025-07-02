@@ -10,10 +10,13 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.dialog
 import androidx.navigation.compose.rememberNavController
 import com.github.xserxses.nqueensproblem.game.board.GameBoardScreen
+import com.github.xserxses.nqueensproblem.scoreboard.ScoreboardScreen
 import com.github.xserxses.nqueensproblem.ui.theme.NQueensProblemTheme
 import com.github.xserxses.nqueensproblem.welcome.home.WelcomeHomeScreen
+import com.github.xserxses.nqueensproblem.welcome.new.WelcomeHomeNew
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.serialization.Serializable
 
@@ -33,11 +36,19 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.padding(innerPadding)
                     ) {
                         composable<WelcomeHome> {
-                            WelcomeHomeScreen {
-                                navController.navigate(GameBoard)
-                            }
+                            WelcomeHomeScreen(
+                                onNavigateNew = { navController.navigate(WelcomeNew) },
+                                onNavigateContinue = { navController.navigate(GameBoard) },
+                                onNavigateScoreboard = { navController.navigate(Scoreboard) }
+                            )
+                        }
+                        dialog<WelcomeNew> {
+                            WelcomeHomeNew(
+                                onNavigateBoard = { navController.navigate(GameBoard) }
+                            )
                         }
                         composable<GameBoard> { GameBoardScreen() }
+                        composable<Scoreboard> { ScoreboardScreen() }
                     }
                 }
             }
@@ -49,4 +60,10 @@ class MainActivity : ComponentActivity() {
 object WelcomeHome
 
 @Serializable
+object WelcomeNew
+
+@Serializable
 object GameBoard
+
+@Serializable
+object Scoreboard

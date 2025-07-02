@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">N Queens Problem</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="welcome_home_board_content_desc">Chess board</string>
 </resources>
