@@ -1,14 +1,12 @@
 package com.github.xserxses.nqueensproblem.app
 
 import android.app.Application
-import com.github.xserxses.nqueensproblem.app.di.DaggerQueensAppComponent
-import com.github.xserxses.nqueensproblem.app.di.QueensAppComponent
+import dagger.hilt.android.HiltAndroidApp
 
+@HiltAndroidApp
 class QueensApplication : Application() {
-    lateinit var appComponent: QueensAppComponent
 
     override fun onCreate() {
         super.onCreate()
-        appComponent = DaggerQueensAppComponent.create()
     }
 }

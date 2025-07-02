@@ -7,56 +7,46 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.github.xserxses.nqueensproblem.app.QueensApplication
-import com.github.xserxses.nqueensproblem.main.di.MainComponent
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.github.xserxses.nqueensproblem.game.board.GameBoardScreen
 import com.github.xserxses.nqueensproblem.ui.theme.NQueensProblemTheme
+import com.github.xserxses.nqueensproblem.welcome.home.WelcomeHomeScreen
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.serialization.Serializable
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    lateinit var component: MainComponent
-
     override fun onCreate(savedInstanceState: Bundle?) {
-        component = (applicationContext as QueensApplication)
-            .appComponent
-            .mainComponent()
-            .create()
-
-        component.inject(this)
-
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            val navController = rememberNavController()
             NQueensProblemTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
+                    NavHost(
+                        navController = navController,
+                        startDestination = WelcomeHome,
                         modifier = Modifier.padding(innerPadding)
-                    )
+                    ) {
+                        composable<WelcomeHome> {
+                            WelcomeHomeScreen {
+                                navController.navigate(GameBoard)
+                            }
+                        }
+                        composable<GameBoard> { GameBoardScreen() }
+                    }
                 }
             }
         }
     }
 }
 
-@Composable
-fun Greeting(
-    name: String,
-    modifier: Modifier = Modifier
-) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+@Serializable
+object WelcomeHome
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    NQueensProblemTheme {
-        Greeting("Android")
-    }
-}
+@Serializable
+object GameBoard
