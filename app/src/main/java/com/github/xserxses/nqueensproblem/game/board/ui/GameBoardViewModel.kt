@@ -27,7 +27,7 @@ import kotlin.reflect.typeOf
 @HiltViewModel
 class GameBoardViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    engine: GameBoardEngine
+    private val engine: GameBoardEngine
 ) : ViewModel() {
     private val gameBoardRoute: GameBoard = savedStateHandle.toRoute(
         typeMap = mapOf(typeOf<GameBoardArgs>() to dataType)
@@ -51,6 +51,7 @@ class GameBoardViewModel @Inject constructor(
         engine
             .state
             .map { mapForUi(it) }
+            .map { addBorders(it) }
             .distinctUntilChanged()
             .onEach { _state.value = it }
             .launchIn(viewModelScope)
@@ -60,7 +61,27 @@ class GameBoardViewModel @Inject constructor(
         TODO()
     }
 
+    private fun addBorders(it: GameBoardState): GameBoardState {
+        TODO("Not yet implemented")
+    }
+
     fun onCellTapped(cell: GameBoardElementUi.Cell) {
-        // ...
+        viewModelScope.launch {
+            engine.cellTapped(cell.x, cell.y)
+        }
+    }
+
+    fun onResetTapped() {
+        viewModelScope.launch {
+            engine.resetGame()
+        }
+    }
+
+    fun pauseGame() {
+        engine.stopTimer()
+    }
+
+    fun resumeGame() {
+        engine.startTimer()
     }
 }

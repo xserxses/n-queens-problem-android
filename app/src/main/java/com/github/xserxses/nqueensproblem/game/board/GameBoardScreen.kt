@@ -9,6 +9,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.github.xserxses.nqueensproblem.game.board.ui.GameBoardViewModel
+import com.github.xserxses.nqueensproblem.game.board.ui.composable.GameBoardComposable
+import com.github.xserxses.nqueensproblem.game.board.ui.composable.GameBoardHudComposable
 import com.github.xserxses.nqueensproblem.game.board.ui.model.GameBoardState
 
 @Composable
@@ -24,7 +26,10 @@ fun GameBoardScreen(
         when (state) {
             is GameBoardState.Loading -> CircularProgressIndicator()
             is GameBoardState.Game -> {
+                GameBoardComposable()
+                GameBoardHudComposable()
             }
+            is GameBoardState.Error -> TODO()
         }
     }
 }

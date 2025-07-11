@@ -13,4 +13,14 @@ sealed class GameBoardState {
             val moves: Int
         )
     }
+
+    data class Error(
+        val reason: ErrorReason,
+        val message: String?
+    ) : GameBoardState() {
+
+        enum class ErrorReason {
+            NO_SAVED_GAME_FOUND,
+        }
+    }
 }
