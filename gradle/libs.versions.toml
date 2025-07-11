@@ -15,6 +15,7 @@ hilt = "2.56.2"
 ksp = "2.2.0-2.0.2"
 ktLint = "11.6.0"
 navigationComposeAndroid = "2.9.0"
+hiltNavigationCompose = "1.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -38,6 +39,7 @@ androidx-navigation-compose-android = { group = "androidx.navigation", name = "n
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
+androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
 
 
 [plugins]
