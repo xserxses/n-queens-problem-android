@@ -34,3 +34,5 @@ google-services.json
 
 #ide files
 .idea
+
+**.DS_Store

@@ -20,7 +20,7 @@ sealed class GameBoardState {
     ) : GameBoardState() {
 
         enum class ErrorReason {
-            NO_SAVED_GAME_FOUND,
+            NO_SAVED_GAME_FOUND
         }
     }
 }

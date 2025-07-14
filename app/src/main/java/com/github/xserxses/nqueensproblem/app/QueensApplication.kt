@@ -2,11 +2,12 @@ package com.github.xserxses.nqueensproblem.app
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 
 @HiltAndroidApp
 class QueensApplication : Application() {
 
-    override fun onCreate() {
-        super.onCreate()
-    }
+    val applicationScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
 }

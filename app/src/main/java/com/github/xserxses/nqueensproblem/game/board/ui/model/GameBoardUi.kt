@@ -2,7 +2,7 @@ package com.github.xserxses.nqueensproblem.game.board.ui.model
 
 data class GameBoardUi(
     val remainingQueens: Int,
-    val cells: Array<Array<GameBoardElementUi>>,
+    val cells: Array<Array<GameBoardElementUi>>
 ) {
 
     override fun equals(other: Any?): Boolean {

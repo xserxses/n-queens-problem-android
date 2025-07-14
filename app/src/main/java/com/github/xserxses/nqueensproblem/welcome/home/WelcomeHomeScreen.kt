@@ -20,7 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.github.xserxses.nqueensproblem.R
 import com.github.xserxses.nqueensproblem.ui.theme.NQueensProblemTheme
 import kotlin.uuid.ExperimentalUuidApi
@@ -28,7 +28,7 @@ import kotlin.uuid.ExperimentalUuidApi
 @OptIn(ExperimentalUuidApi::class)
 @Composable
 fun WelcomeHomeScreen(
-    viewModel: WelcomeHomeViewModel = viewModel(),
+    viewModel: WelcomeHomeViewModel = hiltViewModel(),
     onNavigateContinue: () -> Unit,
     onNavigateNew: () -> Unit,
     onNavigateScoreboard: () -> Unit

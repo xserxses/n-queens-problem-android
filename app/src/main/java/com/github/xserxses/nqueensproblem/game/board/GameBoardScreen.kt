@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.github.xserxses.nqueensproblem.game.board.ui.GameBoardViewModel
 import com.github.xserxses.nqueensproblem.game.board.ui.composable.GameBoardComposable
+import com.github.xserxses.nqueensproblem.game.board.ui.composable.GameBoardErrorComposable
 import com.github.xserxses.nqueensproblem.game.board.ui.composable.GameBoardHudComposable
 import com.github.xserxses.nqueensproblem.game.board.ui.model.GameBoardState
 
@@ -29,7 +30,7 @@ fun GameBoardScreen(
                 GameBoardComposable()
                 GameBoardHudComposable()
             }
-            is GameBoardState.Error -> TODO()
+            is GameBoardState.Error -> GameBoardErrorComposable(state)
         }
     }
 }

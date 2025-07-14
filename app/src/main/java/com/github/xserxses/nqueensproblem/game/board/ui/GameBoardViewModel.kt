@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.github.xserxses.nqueensproblem.game.board.engine.GameBoardEngine
+import com.github.xserxses.nqueensproblem.game.board.engine.GameBoardEngineFactory
 import com.github.xserxses.nqueensproblem.game.board.engine.model.GameBoardEngineGame
 import com.github.xserxses.nqueensproblem.game.board.engine.model.GameBoardEngineStartMode.Continue
 import com.github.xserxses.nqueensproblem.game.board.engine.model.GameBoardEngineStartMode.New
@@ -27,7 +28,7 @@ import kotlin.reflect.typeOf
 @HiltViewModel
 class GameBoardViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val engine: GameBoardEngine
+    private val engineFactory: GameBoardEngineFactory
 ) : ViewModel() {
     private val gameBoardRoute: GameBoard = savedStateHandle.toRoute(
         typeMap = mapOf(typeOf<GameBoardArgs>() to dataType)
@@ -38,14 +39,14 @@ class GameBoardViewModel @Inject constructor(
     private val _state: MutableStateFlow<GameBoardState> = MutableStateFlow(GameBoardState.Loading)
     val state: StateFlow<GameBoardState> = _state
 
+    private lateinit var engine: GameBoardEngine
+
     init {
         viewModelScope.launch {
-            engine.start(
-                when (boardArgs) {
-                    is GameBoardArgs.Continue -> Continue
-                    is GameBoardArgs.New -> New(boardArgs.boardSize)
-                }
-            )
+            engine = when (boardArgs) {
+                is GameBoardArgs.Continue -> engineFactory.create(Continue)
+                is GameBoardArgs.New -> engineFactory.create(New(boardArgs.boardSize))
+            }
         }
 
         engine

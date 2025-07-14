@@ -10,13 +10,12 @@ class GameRepository @Inject constructor() {
     fun restoreSavedGame(): GameEntity? = TODO()
 
     fun saveGame(game: GameEntity) {
-
     }
 
     data class GameEntity(
         val timeElapsed: Duration,
         val boardSize: Int,
-        val queensPlaced: List<Coordinates>,
+        val queensPlaced: List<Coordinates>
     )
 
     data class Coordinates(val x: Int, val y: Int)

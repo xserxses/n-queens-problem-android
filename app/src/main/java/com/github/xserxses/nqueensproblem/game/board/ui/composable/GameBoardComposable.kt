@@ -5,9 +5,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 
 @Composable
 fun GameBoardComposable() {
-
 }
-
 
 @PreviewLightDark
 @Composable

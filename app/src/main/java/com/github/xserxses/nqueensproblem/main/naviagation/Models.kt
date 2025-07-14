@@ -55,4 +55,7 @@ sealed interface GameBoardArgs : Parcelable {
 }
 
 @Serializable
+object GameFinish
+
+@Serializable
 object Scoreboard

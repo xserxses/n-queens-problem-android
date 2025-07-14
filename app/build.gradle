@@ -38,6 +38,11 @@ android {
     buildFeatures {
         compose true
     }
+    testOptions {
+        unitTests.all {
+            useJUnitPlatform()
+        }
+    }
 }
 
 dependencies {
@@ -60,7 +65,11 @@ dependencies {
 
     ktlintRuleset libs.ktlintRuleset
 
-    testImplementation libs.junit
+    testImplementation libs.junit.api
+    testImplementation libs.mockk
+    testImplementation libs.shared.preferences.mock
+    testRuntimeOnly libs.junit.engine
+
     androidTestImplementation libs.androidx.junit
     androidTestImplementation libs.androidx.espresso.core
     androidTestImplementation platform(libs.androidx.compose.bom)
