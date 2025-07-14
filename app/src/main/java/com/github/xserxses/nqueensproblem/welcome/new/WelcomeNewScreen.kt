@@ -5,12 +5,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.SheetState
 import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
@@ -18,15 +16,15 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.github.xserxses.nqueensproblem.R
+import com.github.xserxses.nqueensproblem.ui.shared.NumberPickerComposable
 import com.github.xserxses.nqueensproblem.ui.theme.NQueensProblemTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -40,6 +38,8 @@ fun WelcomeHomeNew(
         onDismissRequest = { onDismiss() },
         sheetState = sheetState
     ) {
+        var size: Int by remember { mutableIntStateOf(0) }
+
         Column(
             modifier = Modifier.padding(16.dp)
         ) {
@@ -54,20 +54,18 @@ fun WelcomeHomeNew(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            var text by remember { mutableStateOf("") }
-
-            OutlinedTextField(
-                value = text,
-                onValueChange = { newText -> text = newText },
-                singleLine = true,
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                modifier = Modifier.fillMaxWidth()
+            NumberPickerComposable(
+                initialValue = 8,
+                valueValidator = { number ->
+                    number in 4..Int.MAX_VALUE
+                },
+                onValueChange = { newValue -> size = newValue }
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
             Button(
-                onClick = { onNavigateBoard(text.toInt()) },
+                onClick = { onNavigateBoard(size) },
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
