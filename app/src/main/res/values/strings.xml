@@ -5,6 +5,12 @@
     <string name="welcome_new_title">New Game</string>
     <string name="welcome_new_subtitle">Enter the board size</string>
     <string name="welcome_new_start">Start Game</string>
+
+    <string name="scoreboard_title">N-Queens Problem Scoreboard!</string>
+    <string name="scoreboard_subtitle">Pick board size</string>
+    <string name="scoreboard_empty">No records for this board size. Play now.</string>
+    <string name="scoreboard_error">Error occurred. Try again later.</string>
+
     <string name="number_picker_minus_cd">Minus 1</string>
     <string name="number_picker_plus_cd">Add 1</string>
 </resources>

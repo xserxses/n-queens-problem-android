@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import com.github.xserxses.nqueensproblem.R
 import com.github.xserxses.nqueensproblem.ui.shared.NumberPickerComposable
 import com.github.xserxses.nqueensproblem.ui.theme.NQueensProblemTheme
+import com.github.xserxses.nqueensproblem.utils.GameBoardSizeValueValidator
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -38,7 +39,7 @@ fun WelcomeHomeNew(
         onDismissRequest = { onDismiss() },
         sheetState = sheetState
     ) {
-        var size: Int by remember { mutableIntStateOf(0) }
+        var size: Int by remember { mutableIntStateOf(INITIAL_SIZE) }
 
         Column(
             modifier = Modifier.padding(16.dp)
@@ -55,17 +56,19 @@ fun WelcomeHomeNew(
             Spacer(modifier = Modifier.height(16.dp))
 
             NumberPickerComposable(
-                initialValue = 8,
-                valueValidator = { number ->
-                    number in 4..Int.MAX_VALUE
-                },
-                onValueChange = { newValue -> size = newValue }
+                initialValue = INITIAL_SIZE,
+                valueValidator = GameBoardSizeValueValidator(),
+                onValueChange = { newValue ->
+                    size = newValue
+                }
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
             Button(
-                onClick = { onNavigateBoard(size) },
+                onClick = {
+                    onNavigateBoard(size)
+                },
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
@@ -75,6 +78,8 @@ fun WelcomeHomeNew(
         }
     }
 }
+
+private const val INITIAL_SIZE = 8
 
 @OptIn(ExperimentalMaterial3Api::class)
 @PreviewLightDark
