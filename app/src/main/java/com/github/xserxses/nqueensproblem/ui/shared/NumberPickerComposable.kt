@@ -17,20 +17,24 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.sp
+import com.github.xserxses.nqueensproblem.R
 import com.github.xserxses.nqueensproblem.ui.theme.NQueensProblemTheme
 
 @Composable
 fun NumberPickerComposable(
+    modifier: Modifier = Modifier,
     initialValue: Int = 8,
     valueValidator: (Int) -> Boolean = { true },
     onValueChange: (Int) -> Unit
 ) {
     Row(
+        modifier = modifier,
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -42,12 +46,14 @@ fun NumberPickerComposable(
             val number = text.toIntOrNull()
             isError = number == null || !valueValidator(number)
             number?.let {
-                text = (it - 1).toString()
+                val newValue = it - 1
+                text = newValue.toString()
+                onValueChange.invoke(newValue)
             }
         }) {
             Icon(
                 Icons.Filled.Remove,
-                contentDescription = "Add"
+                contentDescription = stringResource(R.string.number_picker_minus_cd)
             )
         }
         OutlinedTextField(
@@ -77,12 +83,14 @@ fun NumberPickerComposable(
             val number = text.toIntOrNull()
             isError = number == null || !valueValidator(number)
             number?.let {
-                text = (it + 1).toString()
+                val newValue = it + 1
+                text = newValue.toString()
+                onValueChange.invoke(newValue)
             }
         }) {
             Icon(
                 Icons.Filled.Add,
-                contentDescription = "Add"
+                contentDescription = stringResource(R.string.number_picker_plus_cd)
             )
         }
         Spacer(modifier = Modifier.weight(0.5f))
