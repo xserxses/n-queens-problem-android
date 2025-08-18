@@ -57,7 +57,7 @@ fun WelcomeHomeNew(
 
             NumberPickerComposable(
                 initialValue = INITIAL_SIZE,
-                valueValidator = GameBoardSizeValueValidator(),
+                valueValidator = GameBoardSizeValueValidator,
                 onValueChange = { newValue ->
                     size = newValue
                 }

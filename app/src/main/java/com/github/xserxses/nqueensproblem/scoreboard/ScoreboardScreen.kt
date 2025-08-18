@@ -30,6 +30,7 @@ import com.github.xserxses.nqueensproblem.scoreboard.ui.ScoreboardState
 import com.github.xserxses.nqueensproblem.scoreboard.ui.ScoreboardViewModel
 import com.github.xserxses.nqueensproblem.ui.shared.NumberPickerComposable
 import com.github.xserxses.nqueensproblem.ui.theme.NQueensProblemTheme
+import com.github.xserxses.nqueensproblem.utils.GameBoardSizeValueValidator
 import kotlin.time.Duration.Companion.seconds
 
 
@@ -77,6 +78,7 @@ private fun ScoreboardScreenContent(
             modifier = Modifier
                 .padding(8.dp),
             initialValue = INITIAL_SIZE,
+            valueValidator = GameBoardSizeValueValidator,
             onValueChange = onSizeChanged
         )
         LazyColumn(
