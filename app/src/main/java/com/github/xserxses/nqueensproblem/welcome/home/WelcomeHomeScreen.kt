@@ -31,7 +31,7 @@ fun WelcomeHomeScreen(
     viewModel: WelcomeHomeViewModel = hiltViewModel(),
     onNavigateContinue: () -> Unit,
     onNavigateNew: () -> Unit,
-    onNavigateScoreboard: () -> Unit
+    onNavigateScoreboard: (boardSize: Int?) -> Unit
 ) {
     WelcomeHomeScreenContent(
         continueEnabled = viewModel
@@ -50,7 +50,7 @@ private fun WelcomeHomeScreenContent(
     continueEnabled: Boolean,
     onNavigateContinue: () -> Unit,
     onNavigateNew: () -> Unit,
-    onNavigateScoreboard: () -> Unit
+    onNavigateScoreboard: (boardSize: Int?) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -81,7 +81,7 @@ private fun WelcomeHomeScreenContent(
         )
         WelcomeHomeButton(
             text = "Scoreboard",
-            onClick = { onNavigateScoreboard() }
+            onClick = { onNavigateScoreboard(null) }
         )
     }
 }

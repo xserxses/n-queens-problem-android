@@ -33,25 +33,28 @@ import com.github.xserxses.nqueensproblem.ui.theme.NQueensProblemTheme
 import com.github.xserxses.nqueensproblem.utils.GameBoardSizeValueValidator
 import kotlin.time.Duration.Companion.seconds
 
-
 @Composable
 fun ScoreboardScreen(
+    boardSize: Int?,
     viewModel: ScoreboardViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.collectAsStateWithLifecycle()
-
+    val boardSizeWithDefault = boardSize ?: INITIAL_SIZE
     LaunchedEffect(Unit) {
-        viewModel.onSizeChanged(INITIAL_SIZE)
+        viewModel.onSizeChanged(boardSizeWithDefault)
     }
     ScoreboardScreenContent(
+        boardSizeWithDefault,
         state.value,
-        { viewModel.onSizeChanged(it) })
+        { viewModel.onSizeChanged(it) }
+    )
 }
 
 @Composable
 private fun ScoreboardScreenContent(
+    boardSize: Int,
     state: ScoreboardState,
-    onSizeChanged: (Int) -> Unit,
+    onSizeChanged: (Int) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -77,7 +80,7 @@ private fun ScoreboardScreenContent(
         NumberPickerComposable(
             modifier = Modifier
                 .padding(8.dp),
-            initialValue = INITIAL_SIZE,
+            initialValue = boardSize,
             valueValidator = GameBoardSizeValueValidator,
             onValueChange = onSizeChanged
         )
@@ -154,7 +157,6 @@ private fun ScoreboardScreenContent(
                         )
                     }
                 }
-
             }
         }
     }
@@ -165,6 +167,7 @@ private fun ScoreboardScreenContent(
 fun ScoreboardScreenContentLoadingPreview() {
     NQueensProblemTheme {
         ScoreboardScreenContent(
+            boardSize = 8,
             state = ScoreboardState.Loading,
             onSizeChanged = {}
         )
@@ -176,6 +179,7 @@ fun ScoreboardScreenContentLoadingPreview() {
 fun ScoreboardScreenContentEmptyPreview() {
     NQueensProblemTheme {
         ScoreboardScreenContent(
+            boardSize = 8,
             state = ScoreboardState.Empty,
             onSizeChanged = {}
         )
@@ -187,6 +191,7 @@ fun ScoreboardScreenContentEmptyPreview() {
 fun ScoreboardScreenContentErrorPreview() {
     NQueensProblemTheme {
         ScoreboardScreenContent(
+            boardSize = 8,
             state = ScoreboardState.Error("An unexpected error occurred"),
             onSizeChanged = {}
         )
@@ -203,6 +208,7 @@ fun ScoreboardScreenContentWithItemsPreview() {
     )
     NQueensProblemTheme {
         ScoreboardScreenContent(
+            boardSize = 8,
             state = ScoreboardState.Scoreboard(items),
             onSizeChanged = {}
         )

@@ -58,4 +58,24 @@ sealed interface GameBoardArgs : Parcelable {
 object GameFinish
 
 @Serializable
-object Scoreboard
+data class Scoreboard(val boardSize: Int?) {
+    companion object {
+        val dataType = object : NavType<Scoreboard>(isNullableAllowed = false) {
+            override fun get(bundle: Bundle, key: String): Scoreboard? {
+                return bundle.getString(key)?.let { Json.decodeFromString<Scoreboard>(it) }
+            }
+
+            override fun parseValue(value: String): Scoreboard {
+                return Json.decodeFromString<Scoreboard>(value)
+            }
+
+            override fun put(bundle: Bundle, key: String, value: Scoreboard) {
+                bundle.putString(key, Json.encodeToString(value))
+            }
+
+            override fun serializeAsValue(value: Scoreboard): String {
+                return Uri.encode(Json.encodeToString(value))
+            }
+        }
+    }
+}

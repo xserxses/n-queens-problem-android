@@ -13,6 +13,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.dialog
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import com.github.xserxses.nqueensproblem.game.board.GameBoardScreen
 import com.github.xserxses.nqueensproblem.game.finish.GameFinishScreen
 import com.github.xserxses.nqueensproblem.main.naviagation.GameBoard
@@ -55,7 +56,10 @@ class MainActivity : ComponentActivity() {
                                         )
                                     )
                                 },
-                                onNavigateScoreboard = { navController.navigate(Scoreboard) }
+                                onNavigateScoreboard = {
+                                    navController
+                                        .navigate(Scoreboard(it))
+                                }
                             )
                         }
                         dialog<WelcomeNew> {
@@ -76,10 +80,21 @@ class MainActivity : ComponentActivity() {
                                 onDismiss = { navController.popBackStack() }
                             )
                         }
-                        composable<Scoreboard> { ScoreboardScreen() }
+                        composable<Scoreboard>(
+                            typeMap = mapOf(typeOf<Scoreboard>() to Scoreboard.dataType)
+                        ) { backStackEntry ->
+                            val args: Scoreboard = backStackEntry.toRoute()
+                            ScoreboardScreen(
+                                args.boardSize
+                            )
+                        }
                     }
                 }
             }
         }
+    }
+
+    companion object {
+        const val TAG = "MainActivity"
     }
 }
