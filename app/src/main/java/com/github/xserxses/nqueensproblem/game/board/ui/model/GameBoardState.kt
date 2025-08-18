@@ -1,26 +1,29 @@
 package com.github.xserxses.nqueensproblem.game.board.ui.model
 
+import kotlin.time.Duration
+
 sealed class GameBoardState {
 
     data object Loading : GameBoardState()
 
     data class Game(
-        val ui: GameBoardUi,
-        val win: GameBoardWin?
+        val state: STATE,
+        val time: Duration,
+        val moves: Int,
+        val remainingQueens: Int,
+        val ui: GameBoardUi
     ) : GameBoardState() {
-        data class GameBoardWin(
-            val time: Long,
-            val moves: Int
-        )
+
+        enum class STATE {
+            PLAYING, BACKGROUND, PAUSED, FINISHED
+        }
     }
 
     data class Error(
-        val reason: ErrorReason,
-        val message: String?
+        val reason: Reason
     ) : GameBoardState() {
-
-        enum class ErrorReason {
-            NO_SAVED_GAME_FOUND
+        enum class Reason {
+            INVALID_SIZE, UNKNOWN
         }
     }
 }

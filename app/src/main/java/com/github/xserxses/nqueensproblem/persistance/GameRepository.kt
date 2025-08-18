@@ -22,12 +22,10 @@ class GameRepository @Inject constructor(
                 trySend(restoreSavedGame() != null)
             }
         }
-        // Emit initial value
         trySend(restoreSavedGame() != null)
 
         sharedPreferences.registerOnSharedPreferenceChangeListener(listener)
 
-        // This will be called when the flow is cancelled
         awaitClose {
             sharedPreferences.unregisterOnSharedPreferenceChangeListener(listener)
         }
@@ -42,7 +40,7 @@ class GameRepository @Inject constructor(
     }.getOrNull()
 
     fun saveGame(game: GameEntity) {
-        sharedPreferences.edit(commit = true) {
+        sharedPreferences.edit {
             putString(
                 GAME_KEY,
                 json.encodeToString(GameEntity.serializer(), game)
@@ -51,7 +49,7 @@ class GameRepository @Inject constructor(
     }
 
     fun removeGame() {
-        sharedPreferences.edit(commit = true){
+        sharedPreferences.edit {
             remove(GAME_KEY)
         }
     }

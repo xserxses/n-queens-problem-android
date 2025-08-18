@@ -14,7 +14,7 @@ import kotlin.time.Duration.Companion.milliseconds
 class GameFinishViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val scoreboardRepository: ScoreboardRepository,
-    private val gameRepository: GameRepository,
+    private val gameRepository: GameRepository
 ) : ViewModel() {
 
     val gameFinish: GameFinish = savedStateHandle.toRoute()

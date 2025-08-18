@@ -1,34 +1,47 @@
 package com.github.xserxses.nqueensproblem.game.board.ui.model
 
+import java.util.Objects
+
 data class GameBoardUi(
-    val remainingQueens: Int,
-    val cells: Array<Array<GameBoardElementUi>>
+    val cells: List<GameBoardElementUi>
+)
+
+sealed class GameBoardElementUi(
+    open val id: Long,
+    open val x: Int,
+    open val y: Int
+
 ) {
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
+    data class Placeholder(
+        override val x: Int,
+        override val y: Int
+    ) : GameBoardElementUi(
+        id = Objects.hash(x, y, "placeholder_type").toLong(),
+        x = x,
+        y = y
+    )
 
-        other as GameBoardUi
+    data class Border(
+        val text: String,
+        override val x: Int,
+        override val y: Int
+    ) : GameBoardElementUi(
+        id = Objects.hash(x, y, text, "border_type").toLong(),
+        x = x,
+        y = y
+    )
 
-        return cells.contentDeepEquals(other.cells)
-    }
-
-    override fun hashCode(): Int {
-        return cells.contentDeepHashCode()
-    }
-}
-
-sealed class GameBoardElementUi {
-    object Placeholder : GameBoardElementUi()
-
-    data class Border(val text: String) : GameBoardElementUi()
     data class Cell(
-        val x: Int,
-        val y: Int,
+        override val x: Int,
+        override val y: Int,
         val hasQueen: Boolean,
         val state: CellState,
         val color: CellColor
+    ) : GameBoardElementUi(
+        id = Objects.hash(x, y, "cell_type").toLong(),
+        x = x,
+        y = y
     ) {
         enum class CellState { NORMAL, DANGER }
         enum class CellColor { DARK, LIGHT }

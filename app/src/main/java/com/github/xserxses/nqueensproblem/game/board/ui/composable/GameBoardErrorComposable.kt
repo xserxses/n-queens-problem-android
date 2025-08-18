@@ -14,7 +14,12 @@ import com.github.xserxses.nqueensproblem.ui.theme.NQueensProblemTheme
 fun GameBoardErrorComposable(state: GameBoardState.Error) {
     Column {
         Text(
-            text = state.message ?: stringResource(R.string.game_unknown_error)
+            text = stringResource(
+                when (state.reason) {
+                    GameBoardState.Error.Reason.INVALID_SIZE -> R.string.game_invalid_size
+                    GameBoardState.Error.Reason.UNKNOWN -> R.string.game_unknown_error
+                }
+            )
         )
     }
 }
@@ -26,7 +31,7 @@ fun GameBoardErrorComposablePreview() {
     NQueensProblemTheme {
         GameBoardErrorComposable(
             GameBoardState.Error(
-                "No saved game found, start new game."
+                GameBoardState.Error.Reason.INVALID_SIZE
             )
         )
     }

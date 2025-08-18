@@ -18,7 +18,6 @@ import com.github.xserxses.nqueensproblem.game.board.GameBoardScreen
 import com.github.xserxses.nqueensproblem.game.finish.GameFinishScreen
 import com.github.xserxses.nqueensproblem.main.naviagation.GameBoard
 import com.github.xserxses.nqueensproblem.main.naviagation.GameBoardArgs
-import com.github.xserxses.nqueensproblem.main.naviagation.GameBoardArgs.Companion.dataType
 import com.github.xserxses.nqueensproblem.main.naviagation.GameFinish
 import com.github.xserxses.nqueensproblem.main.naviagation.Scoreboard
 import com.github.xserxses.nqueensproblem.main.naviagation.WelcomeHome
@@ -72,8 +71,16 @@ class MainActivity : ComponentActivity() {
                                 }
                             )
                         }
-                        composable<GameBoard>(typeMap = mapOf(typeOf<GameBoardArgs>() to dataType)) { backStackEntry ->
-                            GameBoardScreen()
+                        composable<GameBoard>(typeMap = mapOf(typeOf<GameBoardArgs>() to GameBoardArgs.dataType)) { backStackEntry ->
+                            GameBoardScreen(onFinish = { time, moves, boardSize ->
+                                navController.navigate(
+                                    GameFinish(
+                                        time.inWholeMilliseconds,
+                                        moves,
+                                        boardSize
+                                    )
+                                )
+                            })
                         }
                         dialog<GameFinish> {
                             GameFinishScreen(
