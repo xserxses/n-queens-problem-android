@@ -23,7 +23,7 @@ class GameRepository @Inject constructor(
     }.getOrNull()
 
     fun saveGame(game: GameEntity) {
-        sharedPreferences.edit {
+        sharedPreferences.edit(commit = true) {
             putString(
                 GAME_KEY,
                 json.encodeToString(GameEntity.serializer(), game)
@@ -34,6 +34,7 @@ class GameRepository @Inject constructor(
     @Serializable
     data class GameEntity(
         val timeElapsed: Duration,
+        val moves: Int,
         val boardSize: Int,
         val queensPlaced: List<Coordinates>
     )

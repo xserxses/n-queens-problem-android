@@ -63,7 +63,8 @@ class GameBoardEngine(
         GameRepository.GameEntity(
             timeElapsed = timeElapsed,
             boardSize = board.size,
-            queensPlaced = emptyList()
+            queensPlaced = emptyList(),
+            moves = 0,
         )
 
     suspend fun resetGame() {

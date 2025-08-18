@@ -34,12 +34,13 @@ internal class GameRepositoryTest {
     fun `saveGame should serialize the game entity and save it to SharedPreferences`() {
         val gameEntity = GameRepository.GameEntity(
             timeElapsed = 65.seconds,
+            moves = 10, // Add the missing moves field
             boardSize = 8,
             queensPlaced = listOf(GameRepository.Coordinates(0, 0), GameRepository.Coordinates(1, 2))
         )
 
         val expectedJsonString = """
-            {"timeElapsed":"PT1M5S","boardSize":8,"queensPlaced":[{"x":0,"y":0},{"x":1,"y":2}]}
+            {"timeElapsed":"PT1M5S","moves":10,"boardSize":8,"queensPlaced":[{"x":0,"y":0},{"x":1,"y":2}]}
         """.trimIndent()
 
         gameRepository.saveGame(gameEntity)
@@ -53,6 +54,7 @@ internal class GameRepositoryTest {
     fun `restoreSavedGame should return the correct GameEntity if a saved game exists`() {
         val gameEntity = GameRepository.GameEntity(
             timeElapsed = 120.seconds,
+            moves = 5, // Add the missing moves field
             boardSize = 4,
             queensPlaced = listOf(GameRepository.Coordinates(1, 3))
         )
@@ -64,6 +66,7 @@ internal class GameRepositoryTest {
         assertNotNull(restoredGame)
         assertEquals(gameEntity, restoredGame)
         assertEquals(120.seconds, restoredGame?.timeElapsed)
+        assertEquals(5, restoredGame?.moves) // Add assertion for moves
         assertEquals(4, restoredGame?.boardSize)
     }
 
