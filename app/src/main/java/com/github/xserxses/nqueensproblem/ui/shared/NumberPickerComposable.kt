@@ -40,17 +40,26 @@ fun NumberPickerComposable(
     ) {
         var text by remember { mutableStateOf(initialValue.toString()) }
         var isError by remember { mutableStateOf(false) }
+        var additionEnabled by remember { mutableStateOf(valueValidator(initialValue + 1)) }
+        var substractionEnabled by remember { mutableStateOf(valueValidator(initialValue - 1)) }
 
         Spacer(modifier = Modifier.weight(0.5f))
-        IconButton(onClick = {
-            val number = text.toIntOrNull()
-            isError = number == null || !valueValidator(number)
-            number?.let {
-                val newValue = it - 1
-                text = newValue.toString()
-                onValueChange.invoke(newValue)
+        IconButton(
+            enabled = substractionEnabled,
+            onClick = {
+                val number = text.toIntOrNull()
+                isError = number == null
+                number?.let {
+                    if (valueValidator(number - 1)) {
+                        val newValue = it - 1
+                        text = newValue.toString()
+                        onValueChange.invoke(newValue)
+                        substractionEnabled = valueValidator(newValue - 1)
+                        additionEnabled = true
+                    }
+                }
             }
-        }) {
+        ) {
             Icon(
                 Icons.Filled.Remove,
                 contentDescription = stringResource(R.string.number_picker_minus_cd)
@@ -79,15 +88,22 @@ fun NumberPickerComposable(
             modifier = Modifier
                 .weight(0.5f)
         )
-        IconButton(onClick = {
-            val number = text.toIntOrNull()
-            isError = number == null || !valueValidator(number)
-            number?.let {
-                val newValue = it + 1
-                text = newValue.toString()
-                onValueChange.invoke(newValue)
+        IconButton(
+            enabled = additionEnabled,
+            onClick = {
+                val number = text.toIntOrNull()
+                isError = number == null
+                number?.let {
+                    if (valueValidator(number + 1)) {
+                        val newValue = it + 1
+                        text = newValue.toString()
+                        onValueChange.invoke(newValue)
+                        additionEnabled = valueValidator(newValue + 1)
+                        substractionEnabled = true
+                    }
+                }
             }
-        }) {
+        ) {
             Icon(
                 Icons.Filled.Add,
                 contentDescription = stringResource(R.string.number_picker_plus_cd)
