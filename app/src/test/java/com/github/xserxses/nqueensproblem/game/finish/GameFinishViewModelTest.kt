@@ -3,6 +3,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.toRoute
 import com.github.xserxses.nqueensproblem.game.finish.GameFinishViewModel
 import com.github.xserxses.nqueensproblem.main.naviagation.GameFinish
+import com.github.xserxses.nqueensproblem.persistance.GameRepository
 import com.github.xserxses.nqueensproblem.persistance.ScoreboardRepository
 import io.mockk.every
 import io.mockk.justRun
@@ -22,6 +23,7 @@ class GameFinishViewModelTest {
     private lateinit var viewModel: GameFinishViewModel
     private val savedStateHandle: SavedStateHandle = mockk(relaxed = true)
     private val scoreboardRepository: ScoreboardRepository = mockk()
+    private val gameRepository: GameRepository = mockk()
 
     private val testBoardSize = 8
     private val testTimeMillis = 10000L
@@ -38,7 +40,11 @@ class GameFinishViewModelTest {
         mockkStatic("androidx.navigation.SavedStateHandleKt")
         every { savedStateHandle.toRoute<GameFinish>() } answers { gameFinish }
 
-        viewModel = GameFinishViewModel(savedStateHandle, scoreboardRepository)
+        viewModel = GameFinishViewModel(
+            savedStateHandle,
+            scoreboardRepository,
+            gameRepository
+        )
     }
 
     @AfterEach

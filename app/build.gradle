@@ -72,6 +72,7 @@ dependencies {
     testRuntimeOnly libs.junit.launcher
     testImplementation libs.mockk
     testImplementation libs.shared.preferences.mock
+    testImplementation libs.coroutines.test
 
     androidTestImplementation libs.androidx.junit
     androidTestImplementation libs.androidx.espresso.core

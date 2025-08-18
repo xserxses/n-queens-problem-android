@@ -2,10 +2,14 @@ package com.github.xserxses.nqueensproblem.persistance
 
 import android.content.SharedPreferences
 import com.github.ivanshafran.sharedpreferencesmock.SPMockBuilder
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertNull
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import kotlin.time.Duration.Companion.seconds
@@ -26,15 +30,28 @@ internal class GameRepositoryTest {
     }
 
     @Test
-    fun `isSavedGameAvailable should always return false as per current implementation`() {
-        assertEquals(false, gameRepository.isSavedGameAvailable())
+    fun `isSavedGameAvailable should return false if no saved game exists`() = runTest {
+        assertFalse(gameRepository.isSavedGameAvailable().first())
+    }
+
+    @Test
+    fun `isSavedGameAvailable should return true after game is saved`() = runTest {
+        val gameEntity = GameRepository.GameEntity(
+            timeElapsed = 65.seconds,
+            moves = 10,
+            boardSize = 8,
+            queensPlaced = listOf(GameRepository.Coordinates(0, 0), GameRepository.Coordinates(1, 2))
+        )
+        gameRepository.saveGame(gameEntity)
+
+        assertTrue(gameRepository.isSavedGameAvailable().first())
     }
 
     @Test
     fun `saveGame should serialize the game entity and save it to SharedPreferences`() {
         val gameEntity = GameRepository.GameEntity(
             timeElapsed = 65.seconds,
-            moves = 10, // Add the missing moves field
+            moves = 10,
             boardSize = 8,
             queensPlaced = listOf(GameRepository.Coordinates(0, 0), GameRepository.Coordinates(1, 2))
         )
