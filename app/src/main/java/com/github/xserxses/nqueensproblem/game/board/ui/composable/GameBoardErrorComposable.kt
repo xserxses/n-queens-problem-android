@@ -3,25 +3,31 @@ package com.github.xserxses.nqueensproblem.game.board.ui.composable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import com.github.xserxses.nqueensproblem.R
 import com.github.xserxses.nqueensproblem.game.board.ui.model.GameBoardState
+import com.github.xserxses.nqueensproblem.ui.theme.NQueensProblemTheme
 
 @Composable
 fun GameBoardErrorComposable(state: GameBoardState.Error) {
-    Column() {
+    Column {
         Text(
-            text = state.message ?: "Unknown error"
+            text = state.message ?: stringResource(R.string.game_unknown_error)
         )
     }
 }
 
 @PreviewLightDark
+@Preview(showBackground = true)
 @Composable
 fun GameBoardErrorComposablePreview() {
-    GameBoardErrorComposable(
-        GameBoardState.Error(
-            GameBoardState.Error.ErrorReason.NO_SAVED_GAME_FOUND,
-            "No saved game found, start new game."
+    NQueensProblemTheme {
+        GameBoardErrorComposable(
+            GameBoardState.Error(
+                "No saved game found, start new game."
+            )
         )
-    )
+    }
 }
