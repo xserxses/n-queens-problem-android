@@ -77,6 +77,15 @@ class MainActivity : ComponentActivity() {
                         }
                         dialog<GameFinish> {
                             GameFinishScreen(
+                                onNavigateScoreboard = {
+                                    navController
+                                        .navigate(Scoreboard(it)) {
+                                            popUpTo(WelcomeHome)
+                                        }
+                                },
+                                onNavigateMainMenu = {
+                                    navController.popBackStack<WelcomeHome>(inclusive = false)
+                                },
                                 onDismiss = { navController.popBackStack() }
                             )
                         }

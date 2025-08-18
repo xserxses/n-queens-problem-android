@@ -55,7 +55,11 @@ sealed interface GameBoardArgs : Parcelable {
 }
 
 @Serializable
-object GameFinish
+data class GameFinish(
+    val timeMillis: Long,
+    val moves: Int,
+    val boardSize: Int
+)
 
 @Serializable
 data class Scoreboard(val boardSize: Int?) {

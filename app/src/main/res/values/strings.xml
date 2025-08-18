@@ -7,6 +7,11 @@
     <string name="welcome_new_start">Start Game</string>
     <string name="welcome_new_size_error">Incorrect board size</string>
 
+    <string name="game_finish_title">Congratulations!</string>
+    <string name="game_finish_subtitle">You solved the puzzle! Size %1$d in %2$d seconds with %3$d moves!</string>
+    <string name="game_finish_go_to_scoreboard">Save record and go to Scoreboard</string>
+    <string name="game_finish_close">Main Menu</string>
+
     <string name="scoreboard_title">N-Queens Problem Scoreboard!</string>
     <string name="scoreboard_subtitle">Pick board size</string>
     <string name="scoreboard_empty">No records for this board size. Play now.</string>
