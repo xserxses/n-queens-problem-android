@@ -55,6 +55,7 @@ fun GameFinishScreen(
         GameFinishScreenContent(
             gameFinish = viewModel.gameFinish,
             saveRecord = { text -> viewModel.saveRecord(text) },
+            finishGame = { viewModel.finishGame() },
             onNavigateMainMenu = onNavigateMainMenu,
             onNavigateScoreboard = onNavigateScoreboard
         )
@@ -65,6 +66,7 @@ fun GameFinishScreen(
 private fun GameFinishScreenContent(
     gameFinish: GameFinish,
     saveRecord: (name: String) -> Unit,
+    finishGame: () -> Unit,
     onNavigateMainMenu: () -> Unit,
     onNavigateScoreboard: (boardSize: Int?) -> Unit
 ) {
@@ -74,7 +76,7 @@ private fun GameFinishScreenContent(
     Surface(
         shape = MaterialTheme.shapes.large,
         color = MaterialTheme.colorScheme.surface,
-        tonalElevation = 6.dp,
+        tonalElevation = 6.dp
     ) {
         Column(
             modifier = Modifier
@@ -132,6 +134,7 @@ private fun GameFinishScreenContent(
                 onClick = {
                     if (text.isNotEmpty()) {
                         saveRecord(text)
+                        finishGame()
                         onNavigateScoreboard(gameFinish.boardSize)
                     } else {
                         isError = true
@@ -146,6 +149,7 @@ private fun GameFinishScreenContent(
             Spacer(Modifier.size(8.dp))
             Button(
                 onClick = {
+                    finishGame()
                     onNavigateMainMenu()
                 },
                 modifier = Modifier.fillMaxWidth()
@@ -165,6 +169,7 @@ fun GameFinishScreenContentPreview() {
         GameFinishScreenContent(
             gameFinish = GameFinish(boardSize = 8, timeMillis = 120000, moves = 15),
             saveRecord = {},
+            finishGame = {},
             onNavigateMainMenu = {},
             onNavigateScoreboard = {}
         )

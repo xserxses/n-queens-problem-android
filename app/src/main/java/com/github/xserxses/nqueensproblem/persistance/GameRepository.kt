@@ -2,6 +2,10 @@ package com.github.xserxses.nqueensproblem.persistance
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.conflate
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import javax.inject.Inject
@@ -12,7 +16,22 @@ class GameRepository @Inject constructor(
     private val json: Json
 ) {
 
-    fun isSavedGameAvailable(): Boolean = restoreSavedGame() != null
+    fun isSavedGameAvailable(): Flow<Boolean> = callbackFlow {
+        val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+            if (key == GAME_KEY) {
+                trySend(restoreSavedGame() != null)
+            }
+        }
+        // Emit initial value
+        trySend(restoreSavedGame() != null)
+
+        sharedPreferences.registerOnSharedPreferenceChangeListener(listener)
+
+        // This will be called when the flow is cancelled
+        awaitClose {
+            sharedPreferences.unregisterOnSharedPreferenceChangeListener(listener)
+        }
+    }.conflate()
 
     fun restoreSavedGame(): GameEntity? = runCatching {
         sharedPreferences
@@ -28,6 +47,12 @@ class GameRepository @Inject constructor(
                 GAME_KEY,
                 json.encodeToString(GameEntity.serializer(), game)
             )
+        }
+    }
+
+    fun removeGame() {
+        sharedPreferences.edit(commit = true){
+            remove(GAME_KEY)
         }
     }
 

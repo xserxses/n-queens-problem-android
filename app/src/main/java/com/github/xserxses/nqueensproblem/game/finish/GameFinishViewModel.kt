@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.navigation.toRoute
 import com.github.xserxses.nqueensproblem.main.naviagation.GameFinish
+import com.github.xserxses.nqueensproblem.persistance.GameRepository
 import com.github.xserxses.nqueensproblem.persistance.ScoreboardRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
@@ -12,7 +13,8 @@ import kotlin.time.Duration.Companion.milliseconds
 @HiltViewModel
 class GameFinishViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val scoreboardRepository: ScoreboardRepository
+    private val scoreboardRepository: ScoreboardRepository,
+    private val gameRepository: GameRepository,
 ) : ViewModel() {
 
     val gameFinish: GameFinish = savedStateHandle.toRoute()
@@ -23,7 +25,10 @@ class GameFinishViewModel @Inject constructor(
             time = gameFinish.timeMillis.milliseconds,
             boardSize = gameFinish.boardSize
         )
-
         scoreboardRepository.saveScore(entity)
+    }
+
+    fun finishGame() {
+        gameRepository.removeGame()
     }
 }
