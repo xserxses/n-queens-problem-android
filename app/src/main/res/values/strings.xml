@@ -5,6 +5,7 @@
     <string name="welcome_new_title">New Game</string>
     <string name="welcome_new_subtitle">Enter the board size</string>
     <string name="welcome_new_start">Start Game</string>
+    <string name="welcome_new_size_error">Incorrect board size</string>
 
     <string name="scoreboard_title">N-Queens Problem Scoreboard!</string>
     <string name="scoreboard_subtitle">Pick board size</string>

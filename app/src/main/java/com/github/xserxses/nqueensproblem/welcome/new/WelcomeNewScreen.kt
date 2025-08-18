@@ -1,5 +1,6 @@
 package com.github.xserxses.nqueensproblem.welcome.new
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,6 +21,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
@@ -65,9 +67,19 @@ fun WelcomeHomeNew(
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            val context = LocalContext.current
+
             Button(
                 onClick = {
-                    onNavigateBoard(size)
+                    if (GameBoardSizeValueValidator(size)) {
+                        onNavigateBoard(size)
+                    } else {
+                        Toast.makeText(
+                            context,
+                            R.string.welcome_new_size_error,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 },
                 modifier = Modifier.fillMaxWidth()
             ) {
