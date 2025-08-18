@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">N Queens Problem</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">N-Queens Problem</string>
     <string name="welcome_home_board_content_desc">Chess board</string>
     <string name="welcome_new_title">New Game</string>
     <string name="welcome_new_subtitle">Enter the board size</string>
