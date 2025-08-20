@@ -33,6 +33,7 @@ import kotlinx.coroutines.plus
 import java.util.Timer
 import kotlin.concurrent.timer
 import kotlin.reflect.typeOf
+import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
 @HiltViewModel
@@ -207,6 +208,7 @@ class GameBoardViewModel @Inject constructor(
     fun onResetTapped() {
         viewModelScope.launch {
             engine.resetGame()
+            timeElapsed = Duration.ZERO
         }
     }
 
