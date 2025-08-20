@@ -88,18 +88,6 @@ class GameBoardViewModel @Inject constructor(
         timer = null
     }
 
-    init {
-        startTimer()
-        engine
-            .state
-            .map { mapEngineGameToUiStateWithBorders(it) }
-            .distinctUntilChanged()
-            .onEach {
-                _state.value = it
-            }
-            .launchIn(viewModelScope + Dispatchers.Default)
-    }
-
     private val listWithBorders: List<GameBoardElementUi> by lazy {
         val uiElements = mutableListOf<GameBoardElementUi>()
         val boardSize = engine.state.value.boardSize
@@ -140,6 +128,18 @@ class GameBoardViewModel @Inject constructor(
             )
         }
         uiElements
+    }
+
+    init {
+        startTimer()
+        engine
+            .state
+            .map { mapEngineGameToUiStateWithBorders(it) }
+            .distinctUntilChanged()
+            .onEach {
+                _state.value = it
+            }
+            .launchIn(viewModelScope + Dispatchers.Default)
     }
 
     private fun mapEngineGameToUiStateWithBorders(game: GameBoardEngineGame): GameBoardState {
